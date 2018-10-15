@@ -1,16 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { header, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import FavoriteDessert from './FavoriteDessert';
+import FavoriteStarter from './FavoriteStarter';
+import FavoriteMainCourse from './FavoriteMainCourse';
 
-export default class FavoriteScreen extends React.Component {
-  static navigationOption = {
-   title: "Favorite"    
-  };
+const FavoriteStarterStack = createStackNavigator({
+  Forret: {screen: FavoriteStarter},
+});
 
-    render() {
-    return (
-      <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-        <Text>FavoriteScreen</Text>
-      </View>
-    );
-  }
-}
+const FavoriteMainCourseStack = createStackNavigator({
+  Hovedret: { screen: FavoriteMainCourse},
+});
+
+const FavoriteDessertStack = createStackNavigator({
+  Dessert: { screen: FavoriteDessert},
+});
+
+export default createBottomTabNavigator(
+  {
+    Forret: { screen: FavoriteStarterStack},
+    Hovedret: { screen: FavoriteMainCourseStack},
+    Dessert: { screen: FavoriteDessertStack},
+  },
+
+{
+  navigationOptions: ({ navigation}) => ({
+
+    tabBarIcon: ({ focused, tintColor }) => {
+
+      const { routeName } = navigation.state;
+      var iconName;
+
+      if (routeName === 'Forret') {
+        iconName = 'md-aperture';
+      } 
+      if (routeName === 'Hovedret') {
+        iconName = 'md-pizza';
+      }  
+      else if (routeName === 'Dessert') {
+          iconName = 'md-ice-cream';
+        }
+        return <Ionicons name={iconName} size={25} color={tintColor}/>;
+      },
+  }),
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'gray',
+   },
+  
+ }
+);
+

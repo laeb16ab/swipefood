@@ -1,81 +1,61 @@
+
 import React from 'react';
-import {Button, Text, View, ScrollView} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-import HomeScreen from './Components/Pages/HomeScreen';
-import StarterScreen from './Components/Pages/StarterScreen';
-import Top5Screen from './Components/Pages/Top5Screen';
-import MainCourseScreen from './Components/Pages/MainCourseScreen';
-import DessertScreen from './Components/Pages/DessertScreen';
-import ProfileScreen from './Components/Pages/ProfileScreen';
-import FavoriteScreen from './Components/Pages/FavoriteScreen';
+import { StyleSheet, ActivityIndicator, Text, View} from 'react-native';
+import LoginForm from './Components/LoginForm';
+import Home from './Components/Pages/Home';
+import firebase from 'firebase';
 
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: null
+    }
+  }
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyB82wJBR4f42xYjOzDWaadzuWTZFI4l10o",
+    authDomain: "fir-projekt-d6792.firebaseapp.com",
+    databaseURL: "https://fir-projekt-d6792.firebaseio.com",
+    projectId: "fir-projekt-d6792",
+    storageBucket: "fir-projekt-d6792.appspot.com",
+    messagingSenderId: "591524020204"
+    })
 
-const HomeStack = createStackNavigator({
-  Home: {screen: HomeScreen},
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {
+    this.setState({ loggedIn: true });
+  } else {
+    this.setState({ loggedIn: false });
+  }
 });
-const StarterStack = createStackNavigator({
-  Starter: { screen: StarterScreen},
-});
-const Top5Stack = createStackNavigator({
-  Top5: { screen: Top5Screen},
-});
-const MainCourseStack = createStackNavigator({
-  MainCourse: { screen: MainCourseScreen},
-});
-const DessertStack = createStackNavigator({
-  Dessert: { screen: DessertScreen},
-});
-const ProfileStack = createStackNavigator({
-  Profile: { screen: ProfileScreen},
-});
-const FavoriteStack = createStackNavigator({
-  Favorite: { screen: FavoriteScreen},
-});
+}
 
-export default createBottomTabNavigator(
-  {
-    Hjem: { screen: HomeStack},
-    Top5: { screen: Top5Stack},
-    Favorit: { screen: FavoriteScreen},
-    Profil: { screen: ProfileStack },
-  },
+render() {
+switch (this.state.loggedIn) {
+  case true:
+    return (
+      <View style={styles.container}>
+        <Home/>
+      </View>
+    );
+  case false:
+    return (
+      <View style={styles.container}>
+      <LoginForm />
+      </View>
+    );
+  default:
+    return <ActivityIndicator size="large" />
+}
+}
+}
 
-{
-  navigationOptions: ({ navigation}) => ({
-
-    tabBarIcon: ({ focused, tintColor }) => {
-
-      const { routeName } = navigation.state;
-      var iconName;
-
-      if (routeName === 'Hjem') {
-        iconName = 'md-home';
-      } 
-      if (routeName === 'Top5') {
-        iconName = 'md-trophy';
-      } 
-      if (routeName === 'Favorit') {
-        iconName = 'md-heart';
-      } 
-      if (routeName === 'Forret') {
-        iconName = 'md-aperture';
-      }
-      if (routeName === 'Hovedret') {
-        iconName = 'md-pizza';
-      } 
-      if (routeName === 'Dessert') {
-        iconName = 'md-ice-cream';
-      }  
-      else if (routeName === 'Profil') {
-          iconName = 'md-contact';
-        }
-        return <Ionicons name={iconName} size={25} color={tintColor}/>;
-      },
-  }),
-  tabBarOptions: {
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
-   },
- }
-);
+const styles = StyleSheet.create({
+container: {
+flex: 1,
+backgroundColor: '#fff',
+alignItems: 'stretch',
+justifyContent: 'center',
+},
+});

@@ -9,7 +9,7 @@ export default class HomeScreen extends React.Component {
     render() {
     return (
       <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-        <Text>HomeScreen</Text>
+        <Text>Velkommen til SwipeFood</Text>
       </View>
     );
   }
