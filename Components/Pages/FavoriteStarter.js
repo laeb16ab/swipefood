@@ -11,7 +11,7 @@ export default class FavoriteStarter extends React.Component {
     }
 }
 static navigationOption = {
-   title: "Starter"    
+   title: 'Starter',    
   };
    
 componentDidMount(){
@@ -30,6 +30,7 @@ getRecipeFromApiAsync() {
     }
 
     render() {
+        
         if (this.setState.isLoading) {
             return (
                 <View style={{ flex: 1, padding: 20, justifyContent: "center", alignItems: "center"}}>
@@ -38,7 +39,8 @@ getRecipeFromApiAsync() {
             )
         }
     return (
-     
+        
+       
       <FlatList
         data={this.state.dataSource}
         renderItem={({item}) =>

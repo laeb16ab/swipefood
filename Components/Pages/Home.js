@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StatusBar, createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import HomeScreen from './HomeScreen';
 import Top5Screen from './Top5Screen';
 import ProfileScreen from './ProfileScreen';
@@ -12,6 +12,7 @@ const HomeStack = createStackNavigator({
 
 const Top5Stack = createStackNavigator({
   Top5: { screen: Top5Screen},
+  
 });
 
 const ProfileStack = createStackNavigator({
@@ -31,7 +32,7 @@ export default createBottomTabNavigator(
   },
 
 {
-
+  
   navigationOptions: ({ navigation}) => ({
   
     tabBarIcon: ({ focused, tintColor }) => {
@@ -68,6 +69,6 @@ export default createBottomTabNavigator(
     activeTintColor: 'tomato',
     inactiveTintColor: 'gray',
    },
- }
+  }
 );
 
