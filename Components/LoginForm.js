@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ActivityIndicator, TextInput, View, Button } from 'react-native';
+import { Text, StyleSheet, ActivityIndicator, TextInput, Image, View, Button } from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
+
 
 export default class LoginForm extends Component {
 
@@ -38,10 +39,12 @@ export default class LoginForm extends Component {
 
   render() {
     switch(this.state.hasLogin) {
+      
       case true: 
       return (
+        
         <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-          <Text>Log ind</Text>
+           <Text>Log ind</Text>
           <TextInput
             label='Username'
             placeholder='bruger@mail.com'
@@ -62,13 +65,16 @@ export default class LoginForm extends Component {
           {this.renderButton()}
           <Button title='Opret profil' onPress={() => this.setState({hasLogin : false})}/>
         </View>
+       
       );
       case false: {
         return(
+        
           <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
             <SignUpForm/>
             <Button title='Gå tilbage' onPress={() => this.setState({hasLogin : true})}/>
           </View>
+       
         )
       }  
     }
@@ -89,6 +95,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  imageView: {
+    flex:1,
+   height: '100%',
+   width: '100%', 
+   resizeMode: 'contain',
   },
   errorTextStyle: {
     fontSize: 20,
