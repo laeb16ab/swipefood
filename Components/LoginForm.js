@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, ActivityIndicator, TextInput, Image, View, Button } from 'react-native';
+import { Text, StyleSheet, ActivityIndicator, TextInput, Image, View, ImageBackground } from 'react-native';
 import firebase from 'firebase';
+import { Button } from 'react-native-elements';
 import SignUpForm from './SignUpForm';
-
+import fridge from './Images/fridge.jpg';
 
 export default class LoginForm extends Component {
 
@@ -18,6 +19,7 @@ export default class LoginForm extends Component {
     };
   }
 
+  //Sends email and password to Firebase for verification.
   signIn() {
     const { email, password } = this.state;
 
@@ -28,10 +30,12 @@ export default class LoginForm extends Component {
       .catch(this.onLoginFail.bind(this));
   }
 
+  //If login succes, email and password are set to empty. 
   onLoginSuccess() {
     this.setState({ email: '', password: '', loading: false, error: '' });
   }
 
+  //If login error, it returns error message.
   onLoginFail(err) {
     this.setState({ loading: false, error: err.message });
   }
@@ -42,16 +46,16 @@ export default class LoginForm extends Component {
       
       case true: 
       return (
-        
-        <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-           <Text>Log ind</Text>
-          <TextInput
+      <ImageBackground source={fridge} style={styles.backgroundImage}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
+           <Text style={styles.headerText}>Log ind</Text>
+          <TextInput style={styles.input}
             label='Username'
             placeholder='bruger@mail.com'
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
           />
-          <TextInput
+          <TextInput style={styles.input}
             placeholder='kodeord'
             value={this.state.password}
             secureTextEntry={true}
@@ -65,7 +69,7 @@ export default class LoginForm extends Component {
           {this.renderButton()}
           <Button title='Opret profil' onPress={() => this.setState({hasLogin : false})}/>
         </View>
-       
+      </ImageBackground>
       );
       case false: {
         return(
@@ -106,5 +110,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     color: 'red'
-  }
+  },
+  backgroundImage: {
+    width: '100%', 
+    height: '100%'
+},
+input: {
+  height: 36,
+  padding: 10,
+  marginTop: 20,
+  marginLeft: 10,
+  marginRight: 10,
+  fontSize: 18,
+  borderWidth: 1,
+  borderRadius: 10,
+  borderColor: 'green',
+  backgroundColor: 'white',
+},
+headerText: {
+  fontWeight: 'bold',
+  fontSize: 20, 
+  textAlign: 'center',
+  backgroundColor: 'white',
+  width: 125,
+  height: 35
+}
 });

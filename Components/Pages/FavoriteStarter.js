@@ -10,8 +10,17 @@ export default class FavoriteStarter extends React.Component {
         isLoading: true
     }
 }
-static navigationOption = {
-   title: 'Starter',    
+static navigationOptions = {
+   title: 'Favorit - Forret',
+   headerStyle: {
+     backgroundColor: 'red',
+     height: 25,
+   },
+   headerTintColor: 'white',
+   headerTitleStyle: {
+     fontWeight: 'bold',
+     justifyContent: 'center',
+   },     
   };
    
 componentDidMount(){
@@ -30,7 +39,7 @@ getRecipeFromApiAsync() {
     }
 
     render() {
-        
+
         if (this.setState.isLoading) {
             return (
                 <View style={{ flex: 1, padding: 20, justifyContent: "center", alignItems: "center"}}>
@@ -55,7 +64,10 @@ getRecipeFromApiAsync() {
          subtitleStyle={{color: 'tomato'}}
          subtitle={item.intro.underOverskrift}
          chevronColor='tomato'
-         onPress={() => alert ( "Opskrift trykket på: " + item.intro.overskrift + "\n")}
+         onPress={() => this.props.navigation.navigate('Recipe', {
+             recipe: item
+         })}
+
          containerStyle={{backgroundColor: 'white'}}
          />
     }

@@ -10,8 +10,17 @@ export default class Top5Dessert extends React.Component {
         isLoading: true
     }
 }
-static navigationOption = {
-   title: "Dessert"    
+static navigationOptions = {
+   title: "Top 5 - Dessert",
+   headerStyle: {
+     backgroundColor: 'red',
+     height: 25,
+   },
+   headerTintColor: 'white',
+   headerTitleStyle: {
+     fontWeight: 'bold',
+     justifyContent: 'center',
+   },  
   };
    
 componentDidMount(){
@@ -53,7 +62,10 @@ getRecipeFromApiAsync() {
          subtitleStyle={{color: 'tomato'}}
          subtitle={item.intro.underOverskrift}
          chevronColor='tomato'
-         onPress={() => alert ( "Opskrift trykket på: " + item.intro.overskrift + "\n")}
+         badge={{ value: item.intro.likes, textStyle: { color: 'white' }, containerStyle: { backgroundColor: 'red' } }}
+         onPress={() => this.props.navigation.navigate('Recipe', {
+            recipe: item
+        })}
          containerStyle={{backgroundColor: 'white'}}
          />
     }

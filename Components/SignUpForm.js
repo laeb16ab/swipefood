@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Text, TextInput,StyleSheet, View, ActivityIndicator, Button } from 'react-native';
+import { Text, TextInput,StyleSheet, View, ActivityIndicator, ImageBackground } from 'react-native';
 import firebase from 'firebase';
+import { Button } from 'react-native-elements';
+import fridge from './Images/fridge.jpg';
 
 export default class SignUpForm extends Component {
 
@@ -33,6 +35,7 @@ export default class SignUpForm extends Component {
       loading: false, 
       error: '' });
     alert("Brugeren er oprettet");
+    this.setProfile();
   }
 
   onSignUpFailed(err) {
@@ -40,19 +43,40 @@ export default class SignUpForm extends Component {
       loading: false, 
       error: err.message });
   }
+  setProfile = () => {
+    var ref = firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/profile`)
+    var obj = { 
+      Meateater: false,
+      Vegan: false,
+      Vegetarian: false,
+      Pescetar: false,
+      Shellfish: false,
+      Laktose: false,
+      Fish: false,
+      Soy: false,
+      Wheat: false, 
+      Egg: false,
+      Nuts: false,
+      Gluten: false,
+      Veggies: false,
+      Peanuts: false    
+    }
+    ref.set(obj)   
+  }
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-          <Text>Opret profil</Text>
+    <ImageBackground source={fridge} style={styles.backgroundImage}>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
+          <Text style={styles.headerText}>Opret profil</Text>
 
-          <TextInput
+          <TextInput style={styles.input}
           label='Username'
             placeholder='bruger@mail.com'
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
           />
-          <TextInput
+          <TextInput style={styles.input}
             placeholder='kodeord'
             value={this.state.password}
             secureTextEntry={true}
@@ -64,6 +88,7 @@ export default class SignUpForm extends Component {
 
           {this.renderButton()}
       </View>
+    </ImageBackground>
     );
   }
 
@@ -83,5 +108,29 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     color: 'red'
+  },
+  backgroundImage: {
+    width: '100%', 
+    height: '100%'
+  },
+  input: {
+    height: 36,
+    padding: 10,
+    marginTop: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 18,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'green',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 20, 
+    textAlign: 'center',
+    backgroundColor: 'white',
+    width: 125,
+    height: 35
   }
 });

@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import {ListItem, Icon} from 'react-native-elements';
 import firebase from 'firebase';
 
-export default class RecipeScreen extends React.Component {
+export default class TopRecipeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ static navigationOptions = {
             </View>
             <View style={styles.childView}>
                 <View style={{width:'78%'}}>
-                    <Text style={styles.headerFont}>{recipe.intro.overskrift}</Text>
+                    <Text style={styles.HeaderFont}>{recipe.intro.overskrift}</Text>
                 </View>
                 <View style={{width:'22%'}}>
                     <View style={styles.childView}>
@@ -46,23 +46,17 @@ static navigationOptions = {
             <View style={styles.childView}>
                 <Text>{recipe.intro.underOverskrift}</Text>
             </View>
-            <View style={{marginLeft: 5}}>
+            <View>
                 <Text style={styles.subHeaderFont}>Ingredienser</Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.ingredienser.step.label}</Text>
-                    <Text>{recipe.ingredienser.step.ingredient.value} med {recipe.ingredienser.step1.ingredient.label}</Text>
-                <Text> </Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.ingredienser.step1.label}</Text>
-                    <Text>{recipe.ingredienser.step1.ingredient.value} med {recipe.ingredienser.step1.ingredient.label}</Text>
-                    <Text>...</Text>
+                <FlatList>
+                    <Text>Her skal ingredienserne loopes</Text>
+                </FlatList>
             </View>
-            <View style={{marginLeft: 5}}>
+            <View>
                 <Text style={styles.subHeaderFont}>Sådan gør du</Text>
-                
-                    <Text>{recipe.howTo.step.value}</Text>
-                    <Text>{recipe.howTo.step.label}</Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.howTo.step1.label}</Text>
-                    <Text>{recipe.howTo.step1.value}</Text>
-                    <Text>...</Text>
+                <FlatList>
+                    <Text>Her skrives processen</Text>
+                </FlatList>
             </View>
           </View>
         </ScrollView>
@@ -74,17 +68,12 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       padding: 2,
       alignItems: 'center',
-      marginLeft: 5,
-      marginRight: 5,
-      
+      marginLeft: 2,
+      marginRight: 2,
     },
-    headerFont: {
+    HeaderFont: {
         fontWeight: 'bold',
         fontSize: 20,
-    },
-    smallHeaderFont: {
-        fontWeight: 'bold',
-        fontSize: 15,
     },
     subHeaderFont: {
         textAlign: 'center',

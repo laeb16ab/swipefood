@@ -10,8 +10,17 @@ export default class FavoriteMainCourse extends React.Component {
         isLoading: true
     }
 }
-static navigationOption = {
-   title: "MainCourse"    
+static navigationOptions = {
+   title: "Favorit - Hovedret",
+   headerStyle: {
+     backgroundColor: 'red',
+     height: 25,
+   },
+   headerTintColor: 'white',
+   headerTitleStyle: {
+     fontWeight: 'bold',
+     justifyContent: 'center',
+   },   
   };
    
 componentDidMount(){
@@ -53,7 +62,9 @@ getRecipeFromApiAsync() {
          subtitleStyle={{color: 'tomato'}}
          subtitle={item.intro.underOverskrift}
          chevronColor='tomato'
-         onPress={() => alert ( "Opskrift trykket på: " + item.intro.overskrift + "\n")}
+         onPress={() => this.props.navigation.navigate('Recipe', {
+            recipe: item
+        })}
          containerStyle={{backgroundColor: 'white'}}
          />
     }
