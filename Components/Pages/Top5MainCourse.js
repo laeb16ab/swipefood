@@ -27,18 +27,24 @@ componentDidMount(){
     this.getRecipeFromApiAsync();
 }
 
+//Gets mainCourse recipes from Firebase and sort by likes.
 getRecipeFromApiAsync() {
   var that = this;
     return firebase.database().ref('opskrifter/mainCourse').on('value', function (snapshot) {
       var opskrifter = Object.values(snapshot.val());
+      opskrifter.sort(function(a,b) {
+          return parseInt(b.intro.likes) - parseInt(a.intro.likes);
+      })
          that.setState({
             isLoading: false,
             dataSource: opskrifter,
         });
       });
     }
+   
 
     render() {
+        console.log(this.state.dataSource);
         if (this.setState.isLoading) {
             return (
                 <View style={{ flex: 1, padding: 20, justifyContent: "center", alignItems: "center"}}>

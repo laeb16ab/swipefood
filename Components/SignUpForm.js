@@ -66,8 +66,8 @@ export default class SignUpForm extends Component {
 
   render() {
     return (
-    <ImageBackground source={fridge} style={styles.backgroundImage}>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
+   
+      <View style={{ alignItems: 'center', justifyContent: 'center',}}>
           <Text style={styles.headerText}>Opret profil</Text>
 
           <TextInput style={styles.input}
@@ -88,7 +88,7 @@ export default class SignUpForm extends Component {
 
           {this.renderButton()}
       </View>
-    </ImageBackground>
+   
     );
   }
 
@@ -97,8 +97,21 @@ export default class SignUpForm extends Component {
       return <ActivityIndicator size='small' />
     }
     return (
-      <Button title="Opret profil" onPress={this.onButtonPress.bind(this)}>
+      
+      <Button 
+      title="Opret profil" 
+      onPress={this.onButtonPress.bind(this)}
+      buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 120,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 10,
+            marginTop: 2
+          }}>
       </Button>
+      
     );
   }
 }
@@ -115,8 +128,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 36,
+    width: 180,
     padding: 10,
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     fontSize: 18,

@@ -26,11 +26,14 @@ static navigationOptions = {
 componentDidMount(){
     this.getRecipeFromApiAsync();
 }
-
+//Gets starter recipes from Firebase and sort by likes.
 getRecipeFromApiAsync() {
   var that = this;
     return firebase.database().ref('opskrifter/starter').on('value', function (snapshot) {
       var opskrifter = Object.values(snapshot.val());
+      opskrifter.sort(function(a,b) {
+        return parseInt(b.intro.likes) - parseInt(a.intro.likes);
+        })
          that.setState({
             isLoading: false,
             dataSource: opskrifter,

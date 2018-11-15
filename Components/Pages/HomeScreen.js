@@ -1,12 +1,12 @@
 import React from 'react';
-import { TouchableOpacity, Image, StyleSheet, Text, View, Button } from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, Text, View } from 'react-native';
 import fridge from '../Images/fridge.jpg';
 import findRecipe from '../Images/FindRecipe.jpg';
 import findFavorite from '../Images/FindFavorite.jpg';
 import favorit from '../Images/favorit.jpg';
 import settings from '../Images/settings.png';
 import addRecipe from '../Images/AddRecipe.png';
-import { CheckBox, Icon } from 'react-native-elements';
+import { CheckBox, Icon, Button } from 'react-native-elements';
 import firebase from 'firebase';
 
 export default class HomeScreen extends React.Component {
@@ -147,16 +147,21 @@ export default class HomeScreen extends React.Component {
   }
 
   updateProfile = () => {
-    var ref = firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/search`)
-    var obj = { 
-      Starter:this.state.checkedStarter, 
-      MainCourse:this.state.checkedMainCourse, 
-      Dessert:this.state.checkedDessert
-    }
-    ref.set(obj)
-   
+    var mealKey;
+   if(this.state.checkedStarter){
+mealKey='starter'
+   }
+   else if(this.state.checkedMainCourse) {
+     mealKey='mainCourse'
+   }
+   else {
+     mealKey='dessert'
+   }
+      
+    this.props.navigation.navigate('SwipeRecipe', {
+      mealKey: mealKey
+  })
   }
-
     render() {
       this.setVisibility();
     return (
@@ -200,7 +205,19 @@ export default class HomeScreen extends React.Component {
           <Text  style={{display: this.setPeanuts}}>Jordnødder</Text>
           </View>
           </View>
-      <Button title="Find opskrifter" onPress={() => this.updateProfile()}/>
+      <Button 
+      title="Find opskrifter" 
+      onPress={() => this.updateProfile()}
+
+      buttonStyle={{
+        backgroundColor: "rgba(92, 99,216, 1)",
+        width: 130,
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 10,
+        marginTop: 2
+      }}/>
      </View>
        
     )

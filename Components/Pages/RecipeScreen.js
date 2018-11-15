@@ -47,27 +47,88 @@ static navigationOptions = {
                 <Text>{recipe.intro.underOverskrift}</Text>
             </View>
             <View style={{marginLeft: 5}}>
-                <Text style={styles.subHeaderFont}>Ingredienser</Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.ingredienser.step.label}</Text>
-                    <Text>{recipe.ingredienser.step.ingredient.value} med {recipe.ingredienser.step1.ingredient.label}</Text>
-                <Text> </Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.ingredienser.step1.label}</Text>
-                    <Text>{recipe.ingredienser.step1.ingredient.value} med {recipe.ingredienser.step1.ingredient.label}</Text>
-                    <Text>...</Text>
+                <Text style={styles.subHeaderFont}>Ingredienser</Text> 
+                {this.generateIngredient()}
             </View>
             <View style={{marginLeft: 5}}>
-                <Text style={styles.subHeaderFont}>Sådan gør du</Text>
-                
-                    <Text>{recipe.howTo.step.value}</Text>
-                    <Text>{recipe.howTo.step.label}</Text>
-                    <Text style={styles.smallHeaderFont}>{recipe.howTo.step1.label}</Text>
-                    <Text>{recipe.howTo.step1.value}</Text>
-                    <Text>...</Text>
+                <Text style={styles.subHeaderFont}>Sådan gør du</Text>         
+                {this.generateHowTo()}
             </View>
           </View>
         </ScrollView>
     )}
+
+    generateIngredient() {
+        const recipe = this.props.navigation.getParam( 'recipe' );
+        const ingredients = recipe.ingredienser;
+        var ingredientComponents = [];
+        
+        for (var key in ingredients) {
+           var step = ingredients[key];
+            for (var keyLookingForLabel in step) {
+                var ingredient = step[keyLookingForLabel];
+                if(keyLookingForLabel === "label"){
+                 ingredientComponents.push(
+                    <Text style={styles.smallHeaderFont}>{ingredient}</Text>
+                 );
+                }
+            }   
+            
+            for(var key in step) {
+                var ingredient = step[key];
+                if(key !== "label"){
+                     ingredientComponents.push(
+                        <Text>{ingredient.value} {ingredient.label}</Text>
+                    );
+                     }
+            }
+        }
+
+        return (
+            <View>
+                {ingredientComponents}
+            </View>
+        )
+
+    }
+
+    generateHowTo() {
+        const recipe = this.props.navigation.getParam( 'recipe' );
+        const howTos = recipe.howTo;
+        var howToComponents = [];
+        console.log(howTos);
+        
+        for (var key in howTos) {
+           var step = howTos[key];
+            for (var keyLookingForLabel in step) {
+                var howTo = step[keyLookingForLabel];
+                if(keyLookingForLabel === "label"){
+                    howToComponents.push(
+                    <Text style={styles.smallHeaderFont}>{howTo}</Text>
+                 );
+                }
+            }   
+            
+            for(var key in step) {
+                var howTo = step[key];
+                if(key !== "label"){
+                    howToComponents.push(
+                        <Text>{howTo.value}</Text>
+                    );
+                     }
+            }
+        }
+
+        return (
+            <View>
+                {howToComponents}
+            </View>
+        )
+
+    }
+
 }
+
 const styles = StyleSheet.create({
     childView: {
       flex:1,
@@ -85,11 +146,13 @@ const styles = StyleSheet.create({
     smallHeaderFont: {
         fontWeight: 'bold',
         fontSize: 15,
+        marginTop: 10,
     },
     subHeaderFont: {
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 25,
+        marginTop: 5,
         fontStyle: 'italic',
         fontFamily: 'BradleyHandITCTT-Bold'
     }

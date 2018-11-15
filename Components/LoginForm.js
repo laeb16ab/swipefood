@@ -67,20 +67,41 @@ export default class LoginForm extends Component {
           </Text>
   
           {this.renderButton()}
-          <Button title='Opret profil' onPress={() => this.setState({hasLogin : false})}/>
+          <Button 
+          title='Opret profil' 
+          onPress={() => this.setState({hasLogin : false})}
+          buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 120,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 10,
+            marginTop: 2
+          }}/>
         </View>
       </ImageBackground>
       );
       case false: {
         return(
-        
-          <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center',}}>
-            <SignUpForm/>
-            <Button title='Gå tilbage' onPress={() => this.setState({hasLogin : true})}/>
-          </View>
-       
-        )
-      }  
+      <ImageBackground source={fridge} style={styles.backgroundImage}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center',}}>
+          <SignUpForm/>
+          <Button 
+          title='Gå tilbage' 
+          onPress={() => this.setState({hasLogin : true})}
+          buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 120,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 10,
+            marginTop: 2
+          }}/>
+        </View>
+      </ImageBackground>
+      )}  
     }
   }
   renderButton() {
@@ -88,7 +109,18 @@ export default class LoginForm extends Component {
       return <ActivityIndicator size='small' />
     }
     return (
-      <Button title="Log ind" onPress={this.signIn.bind(this)}>
+      <Button 
+      title="Log ind" 
+      onPress={this.signIn.bind(this)}
+      buttonStyle={{
+            backgroundColor: "rgba(92, 99,216, 1)",
+            width: 120,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 10,
+            marginTop: 2
+          }}>
       </Button>
     );
   }
@@ -102,9 +134,9 @@ const styles = StyleSheet.create({
   },
   imageView: {
     flex:1,
-   height: '100%',
-   width: '100%', 
-   resizeMode: 'contain',
+    height: '100%',
+    width: '100%', 
+    resizeMode: 'contain',
   },
   errorTextStyle: {
     fontSize: 20,
@@ -114,25 +146,26 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: '100%', 
     height: '100%'
-},
-input: {
-  height: 36,
-  padding: 10,
-  marginTop: 20,
-  marginLeft: 10,
-  marginRight: 10,
-  fontSize: 18,
-  borderWidth: 1,
-  borderRadius: 10,
-  borderColor: 'green',
-  backgroundColor: 'white',
-},
-headerText: {
-  fontWeight: 'bold',
-  fontSize: 20, 
-  textAlign: 'center',
-  backgroundColor: 'white',
-  width: 125,
-  height: 35
-}
+  },
+  input: {
+    height: 36,
+    width: 180,
+    padding: 10,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    fontSize: 18,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: 'green',
+    backgroundColor: 'white',
+  },
+  headerText: {
+    fontWeight: 'bold',
+    fontSize: 20, 
+    textAlign: 'center',
+    backgroundColor: 'white',
+    width: 125,
+    height: 35
+  }
 });

@@ -46,6 +46,7 @@ componentDidMount = () => {
   })
 }
   updateProfile = () => {
+    if(this.state.checkedMeat || this.state.checkedVegetarian || this.state.checkedPescetar || this.state.checkedVegan ) {
     alert('Din brugerprofil er nu opdateret')
     var ref = firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/profile`)
     var obj = { 
@@ -65,6 +66,8 @@ componentDidMount = () => {
       Peanuts:this.state.checkedPeanuts    
     }
     ref.update(obj)   
+  }
+  else {alert('Du skal vælge mindst én kostvane')}
   }
 
     render() {
@@ -107,8 +110,32 @@ componentDidMount = () => {
           </View>
           
       
-        <Button title="Opdater profil" onPress={this.updateProfile}></Button> 
-        <Button title="Log ud" onPress={() => firebase.auth().signOut().then(() => alert("Du er nu logget ud"))}></Button>
+        <Button 
+        title="Opdater profil" 
+        onPress={this.updateProfile}
+        buttonStyle={{
+          backgroundColor: "rgba(92, 99,216, 1)",
+          width: 125,
+          height: 45,
+          borderColor: "transparent",
+          borderWidth: 0,
+          borderRadius: 10,
+          marginTop: 2
+        }}>
+        </Button> 
+        <Button 
+        title="Log ud" 
+        onPress={() => firebase.auth().signOut().then(() => alert("Du er nu logget ud"))}
+        buttonStyle={{
+          backgroundColor: "rgba(92, 99,216, 1)",
+          width: 125,
+          height: 45,
+          borderColor: "transparent",
+          borderWidth: 0,
+          borderRadius: 10,
+          marginTop: 2
+        }}>
+        </Button>
       </View>
       </ScrollView>
     );
