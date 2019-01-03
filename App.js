@@ -12,6 +12,8 @@ export default class App extends React.Component {
       loggedIn: null
     }
   }
+
+  //Connects to Firebase.
   componentWillMount() {
     firebase.initializeApp({
       apiKey: "AIzaSyB82wJBR4f42xYjOzDWaadzuWTZFI4l10o",

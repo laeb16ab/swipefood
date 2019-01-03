@@ -1,11 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, Image, StyleSheet, Text, View } from 'react-native';
-import fridge from '../Images/fridge.jpg';
-import findRecipe from '../Images/FindRecipe.jpg';
-import findFavorite from '../Images/FindFavorite.jpg';
-import favorit from '../Images/favorit.jpg';
-import settings from '../Images/settings.png';
-import addRecipe from '../Images/AddRecipe.png';
 import { CheckBox, Icon, Button } from 'react-native-elements';
 import firebase from 'firebase';
 
@@ -36,6 +30,8 @@ export default class HomeScreen extends React.Component {
       }
       
     }
+
+    //Get the profile from Firebase and set the variables.
     componentDidMount = () => {
       var that = this;
       firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/profile`).on('value', function (profile) {
@@ -145,8 +141,10 @@ export default class HomeScreen extends React.Component {
       }
       else {this.setPeanuts= 'none'};
   }
-
+//Checks if one of the "kostvaner" is checked, if so, updates mealKey, else
+//shows an alert to select at least one "kostvane".
   updateProfile = () => {
+    if(this.state.checkedStarter|| this.state.checkedMainCourse || this.state.checkedDessert ) {
     var mealKey;
    if(this.state.checkedStarter){
 mealKey='starter'
@@ -161,7 +159,13 @@ mealKey='starter'
     this.props.navigation.navigate('SwipeRecipe', {
       mealKey: mealKey
   })
+}
+else {
+  alert('Du skal vælge enten "Forret", "Hovedret" eller "Dessert"')
+}
   }
+
+  //Loads checkBoxes and fills out the boxes based on profile.
     render() {
       this.setVisibility();
     return (

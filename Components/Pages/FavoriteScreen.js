@@ -17,6 +17,8 @@ const FavoriteDessertStack = createStackNavigator({
   Dessert: { screen: FavoriteDessert},
 });
 
+//Creates top and bottom navigationbar, inbetween the 
+//Home.js top and bottom navigationbar. 
 export default createBottomTabNavigator(
   {
     Forret: { screen: FavoriteStarterStack},

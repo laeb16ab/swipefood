@@ -16,7 +16,7 @@ static navigationOptions = {
   };
    
 
-
+//Loads the recipe and generate two views of Ingredient and HowTo. 
     render() {
         const recipe = this.props.navigation.getParam( 'recipe' )
         
@@ -58,6 +58,7 @@ static navigationOptions = {
         </ScrollView>
     )}
 
+    //Loops through 'recipe.ingredient' looking for "label" generation ingredientComponents.
     generateIngredient() {
         const recipe = this.props.navigation.getParam( 'recipe' );
         const ingredients = recipe.ingredienser;
@@ -92,11 +93,11 @@ static navigationOptions = {
 
     }
 
+    //Loops through 'recipe.howTo' looking for "label" generation HowToComponents.
     generateHowTo() {
         const recipe = this.props.navigation.getParam( 'recipe' );
         const howTos = recipe.howTo;
         var howToComponents = [];
-        console.log(howTos);
         
         for (var key in howTos) {
            var step = howTos[key];

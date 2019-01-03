@@ -10,6 +10,8 @@ import RecipeScreen from './RecipeScreen';
 import TopRecipeScreen from './TopRecipeScreen';
 import SwipeRecipe from './SwipeRecipe';
 
+//Creates the stacks for Home, Top5, Profile and Favorite.
+//Adds the logo to the headerbar.
 const HomeStack = createStackNavigator({
   Home: {screen: HomeScreen},
   SwipeRecipe: {screen: SwipeRecipe},
@@ -73,6 +75,7 @@ export default createBottomTabNavigator(
 
 {
   
+  //Adds icons to the bottomnavigationbar.
   navigationOptions: ({ navigation}) => ({
       
     tabBarIcon: ({ focused, tintColor }) => {
@@ -105,6 +108,8 @@ export default createBottomTabNavigator(
       },
       
   }),
+
+  //Decides the icon color wheater it is active or inactive. 
   tabBarOptions: {
     activeTintColor: 'tomato',
     inactiveTintColor: 'gray',

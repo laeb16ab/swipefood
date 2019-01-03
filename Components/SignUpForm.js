@@ -43,6 +43,8 @@ export default class SignUpForm extends Component {
       loading: false, 
       error: err.message });
   }
+
+  //Creates profile "kostvaner" and allergie on Firebase.
   setProfile = () => {
     var ref = firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/profile`)
     var obj = { 

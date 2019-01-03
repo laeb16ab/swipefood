@@ -7,9 +7,11 @@ export default class FavoriteDessert extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        isLoading: true
+        isLoading: true, 
+        refreshing: false,
     }
 }
+
 static navigationOptions = {
    title: "Favorit - Dessert",
    headerStyle: {
@@ -21,23 +23,68 @@ static navigationOptions = {
      fontWeight: 'bold',
      justifyContent: 'center',
    },     
-  };
-   
+};
+favoritArray = [];
+ 
+componentWillMount(){
+    this.getFavoritsDessert();
+}
 componentDidMount(){
     this.getRecipeFromApiAsync();
 }
 
+//Get the desserts on firebase from user and if true added to favoritArray
+getFavoritsDessert() {
+    var that = this;
+    return firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/dessert`).on('value', function (snapshot) {
+        var desserts = Object.values(snapshot.val());
+        for(let i = 0; i < desserts.length; i++) {
+            if(desserts[i].value === true) {
+                that.favoritArray.push(desserts[i].name);
+            }
+        }
+    });
+   
+}
+
+//Gets the recipes from Firebase and add the matching ones from
+//favoritArray to opskrifter.
 getRecipeFromApiAsync() {
   var that = this;
+  var opskrifter = [];
     return firebase.database().ref('opskrifter/dessert').on('value', function (snapshot) {
-      var opskrifter = Object.values(snapshot.val());
-         that.setState({
-            isLoading: false,
-            dataSource: opskrifter,
+        var data = Object.values(snapshot.val());
+        for (let i=0; i < that.favoritArray.length; i++) {
+            Object.keys(data).forEach(function(key) {
+                if (that.favoritArray[i] === data[key].intro.id) {
+                  opskrifter.push(data[key])
+                }
+            });
+        }
+    that.setState({
+        isLoading: false,
+        dataSource: opskrifter,
+        refreshing: false,
         });
-      });
-    }
 
+    });
+}
+
+//Refresh function, swipe down in flatList, empties the favoritArray and runs getFanoritsDessert
+//and getRecipeFromApiAsync.
+handleRefresh = () => {
+    this.setState ({
+        refreshing: true,
+        
+    }, 
+    () => {
+        this.favoritArray = [];
+        this.getFavoritsDessert();
+        this.getRecipeFromApiAsync();
+    })
+}
+
+//Loads the flatList with the recipes from dataSource.
     render() {
         if (this.setState.isLoading) {
             return (
@@ -69,6 +116,8 @@ getRecipeFromApiAsync() {
          />
     }
         keyExtractor={(item, index) => index.toString()}
+        refreshing={this.state.refreshing}
+        onRefresh={this.handleRefresh}
         />
         );
     }

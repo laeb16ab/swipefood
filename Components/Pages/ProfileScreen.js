@@ -24,6 +24,8 @@ export default class ProfileScreen extends React.Component {
     }
   
   }
+
+  //Updates the variables based on the userinformation from Firebase.
 componentDidMount = () => {
   var that = this;
   firebase.database().ref(`/users/${firebase.auth().currentUser.uid}/profile`).on('value', function (profile) {
@@ -45,6 +47,8 @@ componentDidMount = () => {
     });
   })
 }
+
+  //Checkes if at least one of the "Kostvaner" is checked before updating profile in Firebase.
   updateProfile = () => {
     if(this.state.checkedMeat || this.state.checkedVegetarian || this.state.checkedPescetar || this.state.checkedVegan ) {
     alert('Din brugerprofil er nu opdateret')
@@ -67,9 +71,12 @@ componentDidMount = () => {
     }
     ref.update(obj)   
   }
-  else {alert('Du skal vælge mindst én kostvane')}
+  else {
+    alert('Du skal vælge mindst én kostvane')
+    }
   }
 
+  //Loads the profile page and fills out the boxes based on the variables.
     render() {
          return (
       <ScrollView>
@@ -90,22 +97,22 @@ componentDidMount = () => {
           </View>
         </View>
         
-        <Text style={styles.headerText}>Allergier</Text>
+        <Text style={styles.headerText}>Allergi</Text>
           <View style={styles.childView}>
           <View>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedShellfish} title='Skaldyr' onPress={() => this.setState({checkedShellfish: !this.state.checkedShellfish})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedLaktose} title='Laktose' onPress={() => this.setState({checkedLaktose: !this.state.checkedLaktose})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedFish} title='Fisk' onPress={() => this.setState({checkedFish: !this.state.checkedFish})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedSoy} title='Sojabønner' onPress={() => this.setState({checkedSoy: !this.state.checkedSoy})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedWheat} title='Hvede' onPress={() => this.setState({checkedWheat: !this.state.checkedWheat})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedShellfish} title='Skaldyr' onPress={() => this.setState({checkedShellfish: !this.state.checkedShellfish, checkedEgg: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedLaktose} title='Laktose' onPress={() => this.setState({checkedLaktose: !this.state.checkedLaktose, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedFish} title='Fisk' onPress={() => this.setState({checkedFish: !this.state.checkedFish, checkedEgg: false, checkedShellfish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedSoy} title='Sojabønner' onPress={() => this.setState({checkedSoy: !this.state.checkedSoy, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedWheat} title='Hvede' onPress={() => this.setState({checkedWheat: !this.state.checkedWheat, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false})}/>
           </View>
 
           <View>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedEgg} title='Æg' onPress={() => this.setState({checkedEgg: !this.state.checkedEgg})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedNuts} title='Nødder' onPress={() => this.setState({checkedNuts: !this.state.checkedNuts})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedGluten} title='Gluten' onPress={() => this.setState({checkedGluten: !this.state.checkedGluten})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedVeggies} title='Grøntsager' onPress={() => this.setState({checkedVeggies: !this.state.checkedVeggies})}/>
-            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedPeanuts} title='Jordnødder' onPress={() => this.setState({checkedPeanuts: !this.state.checkedPeanuts})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedEgg} title='Æg' onPress={() => this.setState({checkedEgg: !this.state.checkedEgg, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedNuts} title='Nødder' onPress={() => this.setState({checkedNuts: !this.state.checkedNuts, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedGluten} title='Gluten' onPress={() => this.setState({checkedGluten: !this.state.checkedGluten, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedVeggies} title='Grøntsager' onPress={() => this.setState({checkedVeggies: !this.state.checkedVeggies, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedPeanuts: false, checkedSoy: false, checkedWheat: false})}/>
+            <CheckBox checked containerStyle={{backgroundColor: 'white', borderColor: 'white'}} checked={this.state.checkedPeanuts} title='Jordnødder' onPress={() => this.setState({checkedPeanuts: !this.state.checkedPeanuts, checkedEgg: false, checkedShellfish: false, checkedFish: false, checkedGluten: false, checkedLaktose: false, checkedNuts: false, checkedSoy: false, checkedVeggies: false, checkedWheat: false})}/>
           </View>
           </View>
           

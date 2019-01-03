@@ -5,6 +5,8 @@ import Top5Dessert from './Top5Dessert';
 import Top5Starter from './Top5Starter';
 import Top5MainCourse from './Top5MainCourse';
 
+//Creates top and bottom navigationbar, inbetween the 
+//Home.js top and bottom navigationbar. 
 const Top5StarterStack = createStackNavigator({
   Forret: {screen: Top5Starter},
 });
